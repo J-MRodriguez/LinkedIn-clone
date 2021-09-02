@@ -31,25 +31,25 @@ export const Header = (props) => {
                         <NavList>
                             <a>
                                 <img src="/images/nav-network.svg" alt="" />
-                                <span>Home</span>
+                                <span>My Network</span>
                             </a>
                         </NavList>
                         <NavList>
                             <a>
                                 <img src="/images/nav-jobs.svg" alt="" />
-                                <span>Home</span>
+                                <span>Jobs</span>
                             </a>
                         </NavList>
                         <NavList>
                             <a>
                                 <img src="/images/nav-messaging.svg" alt="" />
-                                <span>Home</span>
+                                <span>Messaging</span>
                             </a>
                         </NavList>
                         <NavList>
                             <a>
                                 <img src="/images/nav-notifications.svg" alt="" />
-                                <span>Home</span>
+                                <span>Notifications</span>
                             </a>
                         </NavList>
                         <User>
