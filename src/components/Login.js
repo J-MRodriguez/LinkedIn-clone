@@ -115,7 +115,7 @@ const Hero = styled.div`
     }
   }
   img {
-    z-index: -1;
+    z-index: 1;
     width: 700px;
     height: 670px;
     position: absolute;
