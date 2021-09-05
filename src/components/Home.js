@@ -6,7 +6,7 @@ import RightSide from "./RightSide";
 
 const Home = (props) => {
   return (
-    <Container>
+    <Container className="home">
       <Section>
         <h5>
           <a>Hiring in a hurry? -</a>
