@@ -1,13 +1,27 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
+import { useState } from "react";
 import styled from "styled-components";
+import { connect } from "react-redux";
+import PostModal from "./PostModal";
 
 const Main = (props) => {
+  const [showModal, setShowModal] = useState(false);
+  const handleModal = (e) => {
+    e.preventDefault();
+    setShowModal(true);
+  };
+
   return (
     <Container>
       <ShareBox>
         <div>
-          <img src="/images/user.svg" alt="" />
-          <button>Start a post</button>
+          {props.user ? (
+            <img src={props.user.photoURL} alt="" />
+          ) : (
+            <img src="/images/user.svg" alt="" />
+          )}
+
+          <button onClick={handleModal}>Start a post</button>
         </div>
         <div>
           <button>
@@ -33,6 +47,7 @@ const Main = (props) => {
           <SharedActor>
             <a>
               <img src="/images/user.svg" alt="" />
+
               <div>
                 <span>Title</span>
                 <span>Info</span>
@@ -82,6 +97,7 @@ const Main = (props) => {
           </SocialActions>
         </Article>
       </div>
+      {showModal && <PostModal onClick={() => setShowModal(false)} />}
     </Container>
   );
 };
@@ -283,4 +299,10 @@ const SocialActions = styled.div`
   }
 `;
 
-export default Main;
+const mapStateToProps = (state) => {
+  return {
+    user: state.userState.user,
+  };
+};
+
+export default connect(mapStateToProps)(Main);
