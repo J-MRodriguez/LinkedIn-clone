@@ -1,11 +1,13 @@
 import { useState } from "react";
 import styled from "styled-components";
 import ReactPlayer from "react-player";
+import { connect } from "react-redux";
 
 const PostModal = (props) => {
   const [editorText, setEditorText] = useState("");
   const [shareImage, setShareImage] = useState("");
   const [videoLink, setVideoLink] = useState("");
+  const [assetArea, setAssetArea] = useState("");
 
   const handleChange = (e) => {
     const image = e.target.files[0];
@@ -14,6 +16,20 @@ const PostModal = (props) => {
       alert(`not an image, the file is a ${typeof image}`);
     }
     setShareImage(image);
+  };
+
+  const switchAssetArea = (area) => {
+    setShareImage("");
+    setVideoLink("");
+    setAssetArea(area);
+  };
+
+  const reset = (e) => {
+    setAssetArea("");
+    setEditorText("");
+    setShareImage("");
+    setVideoLink("");
+    props.handleClick(e);
   };
 
   return (
@@ -27,8 +43,16 @@ const PostModal = (props) => {
         </Header>
         <SharedContent>
           <UserInfo>
-            <img src="/images/user.svg" alt="" />
-            <span>Name</span>
+            {props.user.photoURL ? (
+              <img src={props.user.photoURL} alt="" />
+            ) : (
+              <img src="/images/user.svg" alt="" />
+            )}
+            {props.user.displayName ? (
+              <span>{props.user.displayName}</span>
+            ) : (
+              <span>Name</span>
+            )}
           </UserInfo>
           <Editor>
             <textarea
@@ -37,39 +61,44 @@ const PostModal = (props) => {
               placeholder="What do you want to talk about?"
               autoFocus={true}
             />
-            <UploadImage>
-              <input
-                type="file"
-                accept="image/gif, image/jpeg, image/png"
-                name="image"
-                id="file"
-                style={{ display: "none" }}
-                onChange={handleChange}
-              />
-              <p>
-                <label htmlFor="file">Select an image to share</label>
-              </p>
-              {shareImage && (
-                <img src={URL.createObjectURL(shareImage)} alt="" />
-              )}
-              <>
+            {assetArea === "image" ? (
+              <UploadImage>
                 <input
-                  type="text"
-                  placeholder="Plase input a video link"
-                  value={videoLink}
-                  onChange={(e) => setVideoLink(e.target.value)}
+                  type="file"
+                  accept="image/gif, image/jpeg, image/png"
+                  name="image"
+                  id="file"
+                  style={{ display: "none" }}
+                  onChange={handleChange}
                 />
-                {videoLink && <ReactPlayer width={"100%"} url={videoLink} />}
-              </>
-            </UploadImage>
+                <p>
+                  <label htmlFor="file">Select an image to share</label>
+                </p>
+                {shareImage && (
+                  <img src={URL.createObjectURL(shareImage)} alt="" />
+                )}
+              </UploadImage>
+            ) : (
+              assetArea === "media" && (
+                <UploadVideo>
+                  <input
+                    type="text"
+                    placeholder="Plase input a video link"
+                    value={videoLink}
+                    onChange={(e) => setVideoLink(e.target.value)}
+                  />
+                  {videoLink && <ReactPlayer width={"100%"} url={videoLink} />}
+                </UploadVideo>
+              )
+            )}
           </Editor>
         </SharedContent>
         <ShareCreation>
           <AttachAssets>
-            <AssetButton>
+            <AssetButton onClick={() => switchAssetArea("image")}>
               <img src="/images/photo3.svg" alt="" />
             </AssetButton>
-            <AssetButton>
+            <AssetButton onClick={() => switchAssetArea("media")}>
               <img src="/images/video-icon.svg" alt="" />
             </AssetButton>
           </AttachAssets>
@@ -218,14 +247,66 @@ const Editor = styled.div`
     height: 35px;
     font-size: 16px;
     margin-bottom: 20px;
+    &:focus {
+      outline: none;
+    }
   }
 `;
 
 const UploadImage = styled.div`
-  text-align: center;
+  display: flex;
+  justify-content: center;
   img {
     width: 100%;
   }
+  label {
+    display: block;
+    cursor: pointer;
+    color: white;
+    background-color: #0a66c2;
+    height: 20px;
+    font-size: 17px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 16rem;
+    height: 26px;
+    border-radius: 20px;
+    &:hover {
+      box-sizing: border-box;
+      border: 1px solid blue;
+    }
+  }
 `;
 
-export default PostModal;
+const UploadVideo = styled.div`
+  display: flex;
+  input {
+    margin-top: 20px;
+    height: 30px;
+    width: 100%;
+    font-size: 20px;
+    border-radius: 20px;
+    border-color: rgba(0, 0, 0, 0.3);
+    padding-left: 15px;
+    &:focus {
+      border-radius: 20px;
+      border-color: #0a66c2;
+      outline: none;
+    }
+
+    &::placeholder {
+      padding-left: 5px;
+    }
+  }
+`;
+
+const mapStateToProps = (state) => {
+  return {
+    user: state.userState.user,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => ({});
+
+export default connect(mapStateToProps, mapDispatchToProps)(PostModal);
