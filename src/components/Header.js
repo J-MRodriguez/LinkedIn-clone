@@ -115,6 +115,10 @@ const Search = styled.div`
   flex-grow: 1;
   position: relative;
   margin-right: 180px;
+  @media (max-width: 768px) {
+    width: 320px;
+    margin-right: 0px;
+  }
 
   & > div {
     max-width: 280px;
@@ -185,6 +189,7 @@ const NavListWrap = styled.ul`
 const NavList = styled.li`
   display: flex;
   align-items: center;
+
   a {
     align-items: center;
     background: transparent;
@@ -206,7 +211,11 @@ const NavList = styled.li`
       align-items: center;
     }
     @media (max-width: 768px) {
-      min-width: 70px;
+      padding-bottom: 4px;
+      min-width: 51px;
+      span {
+        display: none;
+      }
     }
   }
   &:hover,
