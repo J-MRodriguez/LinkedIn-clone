@@ -42,7 +42,7 @@ const PostModal = (props) => {
     props.postArticle(payload);
     reset(e);
   };
-  const reset = (e) => {
+  const reset = () => {
     setAssetArea("");
     setEditorText("");
     setShareImage("");
