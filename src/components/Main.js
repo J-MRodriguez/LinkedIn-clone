@@ -361,6 +361,15 @@ const SocialActions = styled.div`
       margin-left: 8px;
     }
   }
+  @media (max-width: 768px) {
+    padding: 4px 0px;
+    button {
+      padding: 3px;
+      img {
+        width: 20px;
+      }
+    }
+  }
 `;
 
 const Content = styled.div`
