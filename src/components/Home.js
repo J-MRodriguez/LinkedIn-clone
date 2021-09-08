@@ -12,12 +12,9 @@ const Home = (props) => {
       {!props.user && <Redirect to="/" />}
       <Section>
         <h5>
-          <a>Hiring in a hurry? -</a>
+          <a>Hey, do you want your own website? -</a>
         </h5>
-        <p>
-          Find talented pros in record time with Upwork and keep business
-          moving.
-        </p>
+        <p>go to juanmadev.com to request a quote</p>
       </Section>
       <Layout>
         <LeftSide />
@@ -32,14 +29,10 @@ const Container = styled.div`
   padding-top: 52px;
   max-width: 100%;
 `;
-// const Content = styled.div`
-//     max-width: 1128px;
-//     margin-left: auto;
-//     margin-right: auto;
-// `
+
 const Section = styled.section`
   min-height: 50px;
-  padding: 16px 0;
+  padding: 6px 0;
   box-sizing: content-box;
   text-align: center;
   text-decoration: underline;
@@ -65,13 +58,9 @@ const Section = styled.section`
 `;
 
 const Layout = styled.div`
-  display: grid;
-  grid-template-areas: "leftside main rightside";
-  grid-template-columns: minmax(0, 5fr) minmax(0, 12fr) minmax(300px, 7fr);
-  column-gap: 25px;
-  row-gap: 25px;
-  grid-template-rows: auto;
-  margin: 25px 0;
+  display: flex;
+  justify-content: center;
+
   @media (max-width: 768px) {
     display: flex;
     flex-direction: column;

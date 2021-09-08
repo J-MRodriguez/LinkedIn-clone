@@ -44,14 +44,20 @@ const RightSide = (props) => {
 };
 
 const Container = styled.div`
-  grid-area: rightside;
+  max-width: 360px;
+  margin-left: 25px;
+  @media (max-width: 768px) {
+    margin-top: 20px;
+    max-width: 100%;
+    margin-left: 0px;
+  }
 `;
 const FollowCard = styled.div`
   text-align: center;
   overflow: hidden;
   margin-bottom: 8px;
   background-color: #fff;
-  border-radius: 5px;
+  border-radius: 10px;
   position: relative;
   border: none;
   box-shadow: 0 0 0 1px rgb(0 0 0 / 15%), 0 0 0 rgb(0 0 0 / 20%);
@@ -75,6 +81,7 @@ const FeedList = styled.ul`
     margin: 12px 0;
     position: relative;
     font-size: 14px;
+    cursor: pointer;
     & > div {
       display: flex;
       flex-direction: column;
@@ -95,6 +102,7 @@ const FeedList = styled.ul`
       max-height: 32px;
       text-align: center;
       outline: none;
+      cursor: pointer;
     }
   }
 `;
@@ -114,8 +122,10 @@ const Recommendation = styled.a`
   display: flex;
   align-items: center;
   font-size: 14px;
+  cursor: pointer;
 `;
 const BannerCard = styled(FollowCard)`
+  cursor: pointer;
   img {
     width: 100%;
     height: 100%;

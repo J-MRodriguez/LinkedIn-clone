@@ -2,6 +2,8 @@ import { useState } from "react";
 import styled from "styled-components";
 import ReactPlayer from "react-player";
 import { connect } from "react-redux";
+import firebase from "firebase/compat/app";
+import { postArticleAPI } from "../actions";
 
 const PostModal = (props) => {
   const [editorText, setEditorText] = useState("");
@@ -24,12 +26,28 @@ const PostModal = (props) => {
     setAssetArea(area);
   };
 
+  const postArticle = (e) => {
+    e.preventDefault();
+    if (e.target !== e.currentTarget) {
+      return;
+    }
+
+    const payload = {
+      image: shareImage,
+      video: videoLink,
+      user: props.user,
+      description: editorText,
+      timestamp: firebase.firestore.Timestamp.now(),
+    };
+    props.postArticle(payload);
+    reset(e);
+  };
   const reset = (e) => {
     setAssetArea("");
     setEditorText("");
     setShareImage("");
     setVideoLink("");
-    props.handleClick(e);
+    // props.handleClick(e);
   };
 
   return (
@@ -107,7 +125,15 @@ const PostModal = (props) => {
               <img src="/images/Comment-icon.svg" alt="" />
             </AssetButton>
           </ShareComment>
-          <PostButton disabled={!editorText ? true : false}>Post</PostButton>
+          <PostButton
+            disabled={!editorText ? true : false}
+            onClick={(event) => {
+              postArticle(event);
+              props.onClick();
+            }}
+          >
+            Post
+          </PostButton>
         </ShareCreation>
       </Content>
     </Container>
@@ -155,7 +181,8 @@ const Header = styled.div`
     height: 40px;
     width: 40px;
     min-width: auto;
-    color: rgba(0, 0, 0, 0.15);
+    border: none;
+    background-color: white;
     svg {
       width: 100%;
       pointer-events: none;
@@ -205,6 +232,9 @@ const AssetButton = styled.button`
   height: 40px;
   min-width: auto;
   color: rgba(0, 0, 0, 0.5);
+  border: none;
+  background-color: white;
+  margin: 0 5px;
   img {
     width: 24px;
   }
@@ -213,7 +243,7 @@ const AssetButton = styled.button`
 const AttachAssets = styled.div`
   display: flex;
   align-items: center;
-  padding-right: 8px;
+  padding-right: 18px;
   ${AssetButton} {
     width: 40px;
   }
@@ -228,6 +258,7 @@ const ShareComment = styled.div`
 const PostButton = styled.button`
   min-width: 60px;
   border-radius: 20px;
+  border: none;
   padding-left: 16px;
   padding-right: 16px;
   background: ${(props) => (props.disabled ? "rgba(0,0,0,0.1)" : "#0a66c2")};
@@ -256,8 +287,20 @@ const Editor = styled.div`
 const UploadImage = styled.div`
   display: flex;
   justify-content: center;
+  flex-direction: column;
+  align-items: center;
   img {
     width: 100%;
+    margin-top: 10px;
+  }
+  input {
+    margin-top: 20px;
+    height: 30px;
+    width: 100%;
+    font-size: 20px;
+    border-radius: 20px;
+    border-color: rgba(0, 0, 0, 0.3);
+    padding-left: 15px;
   }
   label {
     display: block;
@@ -281,7 +324,11 @@ const UploadImage = styled.div`
 
 const UploadVideo = styled.div`
   display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
   input {
+    margin-bottom: 10px;
     margin-top: 20px;
     height: 30px;
     width: 100%;
@@ -307,6 +354,8 @@ const mapStateToProps = (state) => {
   };
 };
 
-const mapDispatchToProps = (dispatch) => ({});
+const mapDispatchToProps = (dispatch) => ({
+  postArticle: (payload) => dispatch(postArticleAPI(payload)),
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(PostModal);

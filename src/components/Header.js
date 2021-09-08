@@ -89,7 +89,6 @@ const Container = styled.div`
   background-color: white;
   border-bottom: 1px solid rgba(0, 0, 0, 0.08);
   left: 0;
-  padding: 0 24px;
   position: fixed;
   top: 0;
   width: 100vw;
@@ -100,18 +99,26 @@ const Content = styled.div`
   align-items: center;
   margin: 0 auto;
   min-height: 100%;
-  max-width: 1128px;
+  max-width: 800px;
+  justify-content: center;
+  padding: 5px 0;
 `;
 const Logo = styled.span`
   margin-right: 8px;
   font-size: 0px;
+  @media (max-width: 768px) {
+    padding-left: 25px;
+  }
 `;
 const Search = styled.div`
   opacity: 1;
   flex-grow: 1;
   position: relative;
+  margin-right: 180px;
+
   & > div {
     max-width: 280px;
+
     input {
       border: none;
       box-shadow: none;
@@ -126,6 +133,9 @@ const Search = styled.div`
       height: 34px;
       border-color: #dce6f1;
       vertical-align: text-top;
+      @media (max-width: 768px) {
+        width: 320px;
+      }
     }
   }
 `;
@@ -210,7 +220,7 @@ const NavList = styled.li`
 `;
 const SignOut = styled.div`
   position: absolute;
-  top: 38px;
+  top: 45px;
   background: white;
   border-radius: 0 0 5px 5px;
   width: 100px;

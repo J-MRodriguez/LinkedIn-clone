@@ -62,14 +62,21 @@ const LeftSide = (props) => {
 };
 
 const Container = styled.div`
-  grid-area: leftside;
+  max-width: 250px;
+  margin-right: 25px;
+
+  @media (max-width: 768px) {
+    margin-top: 20px;
+    max-width: 100%;
+    margin-right: 0px;
+  }
 `;
 const ArtCard = styled.div`
   text-align: center;
   overflow: hidden;
   margin-bottom: 8px;
   background-color: #fff;
-  border-radius: 5px;
+  border-radius: 10px;
   transition: box-shadow 83ms;
   position: relative;
   border: none;
@@ -93,7 +100,6 @@ const CardBackground = styled.div`
 const Photo = styled.div`
   img {
     box-shadow: none;
-    /* background-image: url("/images/photo.svg"); */
     width: 72px;
     height: 72px;
     box-sizing: border-box;
@@ -105,6 +111,7 @@ const Photo = styled.div`
     border: 2px solid white;
     margin: -38px auto 12px;
     border-radius: 50%;
+    cursor: pointer;
   }
 `;
 
@@ -121,11 +128,13 @@ const AddPhotoText = styled.div`
   font-size: 12px;
   line-height: 1.33;
   font-weight: 400;
+  cursor: pointer;
 `;
 const Widget = styled.div`
   border-bottom: 1px solid rgba(0, 0, 0, 0.15);
   padding-top: 12px;
   padding-bottom: 12px;
+  cursor: pointer;
 
   & > a {
     text-decoration: none;
@@ -164,6 +173,7 @@ const Item = styled.a`
   padding: 12px;
   font-size: 12px;
   display: block;
+  cursor: pointer;
   span {
     display: flex;
     align-items: center;
@@ -181,6 +191,7 @@ const CommunityCard = styled(ArtCard)`
   text-align: left;
   display: flex;
   flex-direction: column;
+  cursor: pointer;
   a {
     color: black;
     padding: 4px 12px 4px 12px;
